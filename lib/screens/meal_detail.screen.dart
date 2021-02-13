@@ -14,6 +14,14 @@ class MealDetailScreen extends StatelessWidget {
     );
   }
 
+  Widget buildContainer(Widget child) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      width: double.infinity,
+      child: child,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments =
@@ -25,38 +33,58 @@ class MealDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(selectedMeal.title),
       ),
-      body: Column(
-        children: [
-          Container(
-            height: 300,
-            width: double.infinity,
-            child: Image.network(
-              selectedMeal.imageUrl,
-              fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 300,
+              width: double.infinity,
+              child: Image.network(
+                selectedMeal.imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          buildSectionTitle(context, 'Ingedients'),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: selectedMeal.ingredients
-                  .map((ingedient) => Card(
-                        color: Theme.of(context).accentColor,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                          child: Text(
-                            ingedient,
+            buildSectionTitle(context, 'Ingedients'),
+            buildContainer(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: selectedMeal.ingredients
+                    .map((ingedient) => Card(
+                          color: Theme.of(context).accentColor,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            child: Text(
+                              ingedient,
+                            ),
                           ),
-                        ),
-                      ))
-                  .toList(),
+                        ))
+                    .toList(),
+              ),
             ),
-          ),
-          buildSectionTitle(context, 'Steps'),
-        ],
+            buildSectionTitle(context, 'Steps'),
+            buildContainer(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: selectedMeal.steps
+                    .map((step) => Column(
+                          children: [
+                            ListTile(
+                              leading: CircleAvatar(
+                                child: Text(
+                                    '#${selectedMeal.steps.indexOf(step) + 1}'),
+                              ),
+                              title: Text(step),
+                            ),
+                            Divider()
+                          ],
+                        ))
+                    .toList(),
+              ),
+            ),
+            SizedBox(height: 50),
+          ],
+        ),
       ),
     );
   }
