@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/screens/filters.screen.dart';
+import 'package:meals_app/screens/tabs.screen.dart';
 
 class MainDrawer extends StatelessWidget {
   Widget buildListTile({String title, IconData icon, Function onTap}) {
@@ -25,10 +27,11 @@ class MainDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 120,
+            height: 130,
             width: double.infinity,
             padding: EdgeInsets.all(20),
             alignment: Alignment.centerLeft,
+            color: Theme.of(context).accentColor,
             child: Text(
               'Cooking Up!',
               style: TextStyle(
@@ -39,8 +42,20 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20),
-          buildListTile(title: 'Meals', icon: Icons.restaurant, onTap: () {}),
-          buildListTile(title: 'Filters', icon: Icons.settings, onTap: () {})
+          buildListTile(
+            title: 'Meals',
+            icon: Icons.restaurant,
+            onTap: () {
+              Navigator.of(context).pushNamed(TabsScreen.routeName);
+            },
+          ),
+          buildListTile(
+            title: 'Filters',
+            icon: Icons.settings,
+            onTap: () {
+              Navigator.of(context).pushNamed(FiltersScreen.routeName);
+            },
+          )
         ],
       ),
     );
