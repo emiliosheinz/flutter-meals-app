@@ -38,6 +38,33 @@ class _FiltersScreenState extends State<FiltersScreen> {
     );
   }
 
+  void _showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Filters saved successfully"),
+      content: Text("Go back to te meals section to see the filtered result."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +80,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                   'isVegan': _isVegan,
                   'isVegeterian': _isVegeterian,
                 });
+                _showAlertDialog(context);
               },
             ),
           ],
